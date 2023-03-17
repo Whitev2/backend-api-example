@@ -21,6 +21,8 @@ sdist/
 var/
 wheels/
 *.egg-info/
+Data
+app/migrations/versions/
 .installed.cfg
 *.egg
 MANIFEST
