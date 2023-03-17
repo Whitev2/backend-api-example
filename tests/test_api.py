@@ -15,6 +15,34 @@ def assert_balance(user, expected_balance, date=None):
     assert balance_resp.json()['balance'] == expected_balance
 
 
+def many_transaction(user):
+    hash = str(uuid.uuid4())
+
+    txn = {
+        'uid': user['uid'],
+        'hash': hash,
+        'type': 'DEPOSIT',
+        'amount': '100.0',
+        'timestamp': datetime(2023, 1, 4).isoformat(),  # technical field to make tests possible
+    }
+
+    txn_resp = requests.post(f'{host}v1/transaction', json=txn)
+    assert txn_resp.status_code == 200
+    assert_balance(user, '140.00')
+
+    txn = {
+        'uid': user['uid'],
+        'hash': hash,
+        'type': 'DEPOSIT',
+        'amount': '100.0',
+        'timestamp': datetime(2023, 2, 4).isoformat(),  # technical field to make tests possible
+    }
+
+    txn_resp = requests.post(f'{host}v1/transaction', json=txn)
+    assert txn_resp.status_code == 409
+    assert_balance(user, '140.00')
+
+
 
 def test_api():
     user_resp = requests.post(f'{host}v1/user', json={
@@ -28,6 +56,7 @@ def test_api():
 
     assert_balance(user, '0.00')
 
+    many_hash = str(uuid.uuid4())
     txn = {
         'uid': user['uid'],
         'hash': str(uuid.uuid4()),
@@ -80,3 +109,5 @@ def test_api():
     assert_balance(user, '40.00')
 
     assert_balance(user, '50.00', date='2023-01-30T00:00:00.00000000')
+
+    many_transaction(user)

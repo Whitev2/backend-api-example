@@ -1,7 +1,7 @@
 from __future__ import annotations
 from datetime import datetime
 
-from api_exceptions.transaction_exc import BadBalance
+from api_exceptions.transaction_exc import BadBalance, TransactionAlreadyExist
 from models import Transaction, User
 
 from utils.rounding import rounding
@@ -30,6 +30,12 @@ class TransactionCrud:
             date = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
         except:
             date = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%f")
+
+        # if exist check
+        check_transaction: TransactionBase = await self.get(hash=hash)
+
+        if check_transaction is not None:
+            raise TransactionAlreadyExist
 
         transaction: Transaction = await Transaction.create(trn_hash=hash,
                                                             type=type,

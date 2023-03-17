@@ -1,6 +1,7 @@
 from aiohttp import web
 from aiohttp.web import Request
 
+from api_exceptions.transaction_exc import TransactionAlreadyExist
 from crud import get_user_crud, get_transaction_crud
 
 
@@ -19,7 +20,11 @@ async def create_transaction(request: Request):
     data = await request.json()
     hash, uid, type, amount, timestamp = data.get("hash"), data.get("uid"), data.get("type"), data.get("amount"), data.get("timestamp")
 
-    transaction = await transaction_crud.create(hash=hash, type=type, amount=amount, timestamp=timestamp, uid=uid)
+    try:
+        transaction = await transaction_crud.create(hash=hash, type=type, amount=amount, timestamp=timestamp, uid=uid)
+
+    except TransactionAlreadyExist:
+        return web.json_response(status=409)
 
     if transaction is None:
         return web.json_response(status=402)
