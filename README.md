@@ -16,16 +16,13 @@
 ## Установка и запуск:
 
 
-0. Переименовать .env.example в .env:
-
-
 1. Клонировать проект в удобное место:
-
 ```sh
 git clone https://github.com/Whitev2/backend-api-example.git
 ```
+2. Переименовать .env.example в .env:
 
-2. Собрать и запустить контейнеры:
+3. Собрать и запустить контейнеры:
 ```sh
 docker-compose build
 ```
@@ -33,16 +30,17 @@ docker-compose build
 docker-compose up
 ```
 
-3. Создать миграции:
+4. Создать миграции:
 ```sh
 docker-compose exec backend_api alembic revision --autogenerate -m "init"
 ```
-4. Обновление базы данных:
+
+5. Обновление базы данных:
 ```sh
 docker-compose exec backend_api alembic upgrade head
 ```
 
-5. Запустить тесты
+6. Запустить тесты
 
 <hr/>
 
