@@ -27,8 +27,14 @@ git clone https://github.com/Whitev2/backend-api-example.git
 
 2. Собрать и запустить контейнеры:
 ```sh
-docker-compose up -d --build
+docker-compose build
 ```
+```sh
+docker-compose up
+```
+
+2. Запустить тесты
+
 <hr/>
 
 ## Информация:
