@@ -33,13 +33,21 @@ docker-compose build
 docker-compose up
 ```
 
-2. Запустить тесты
+3. Создать миграции:
+```sh
+docker-compose exec backend_api alembic revision --autogenerate -m "init"
+```
+4. Обновление базы данных:
+```sh
+docker-compose exec backend_api alembic upgrade head
+```
+
+5. Запустить тесты
 
 <hr/>
 
 ## Информация:
 
-- Модели баз данных создаются вместе с сборкой проекта в starter.sh
 - В тестах был дабавлен параметр hash - его имитирует uuid
 - Транзакции привязыватся к пользователю по uid
 - Был исправлен url в тестах assert_balance
