@@ -1,7 +1,6 @@
 import uvloop
 from aiohttp import web
-
-from app.app import init_app
+from app import init_app
 
 
 def create_app() -> web.Application:
@@ -11,8 +10,10 @@ def create_app() -> web.Application:
 
 
 def main() -> None:
+
     uvloop.install()
     app = init_app()
+    print("STARTED SERVER")
     web.run_app(app, host=app['config'].HOST, port=app['config'].PORT)
 
 

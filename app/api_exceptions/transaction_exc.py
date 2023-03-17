@@ -1,0 +1,2 @@
+class BadBalance(ValueError):
+    pass

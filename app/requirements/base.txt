@@ -7,3 +7,6 @@ uvloop==0.14.0
 environs==9.3.1
 requests
 pytest
+
+alembic==1.10.2
+pydantic
